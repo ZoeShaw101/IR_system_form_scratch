@@ -109,8 +109,8 @@ public class Query {
         return simmMatrix;
     }
 
-    public static void main(String[] args) {
-        Document doc = new Document(26);
+    public static void main(String[] args) throws IOException {
+        Document doc = new Document();
         Query query = null;
         try {
             query = new Query(doc);
