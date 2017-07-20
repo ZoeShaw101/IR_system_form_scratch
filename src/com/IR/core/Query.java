@@ -4,12 +4,9 @@ import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.IndexTokenizer;
 import com.oracle.tools.packager.mac.MacAppBundler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.lang.Math;
 import java.io.*;
-import java.util.List;
-import java.util.Map;
 
 public class Query {
     private int word_num;
@@ -102,7 +99,14 @@ public class Query {
                 maxSimmIdx = i;
             }
         }
-        System.out.println("检索结果： " + doc.getDocCollection().get(maxSimmIdx));
+        Arrays.sort(simmMatrix);
+        System.out.println("检索结果：");
+        int len = doc.getDocNum();
+        for (int i = len - 1; i >= 0; i--) {
+            String content = doc.getDocCollection().get(i);
+            System.out.println(doc.getTitleToContent().get(content) + "   相似度： " + simmMatrix[i]);
+            System.out.println(content);
+        }
     }
 
     public double[] getSimmMatrix() {
@@ -117,8 +121,6 @@ public class Query {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        for (int i = 0; i < doc.getDocNum(); i++)
-//            System.out.println(query.getSimmMatrix()[i]);
         query.showQueryResult(doc);
     }
 }
